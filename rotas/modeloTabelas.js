@@ -2,24 +2,22 @@ const Sequelize = require('sequelize')
 const instancia = require('../banco-de-dados/index')
 
 const colunas = {
-    nome: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    desconto: {
+    discount: {
         type: Sequelize.FLOAT,
         allowNull: false
     },
-    multiplicador: {
+    multiply: {
         type: Sequelize.FLOAT,
         allowNull: true,
-        defaultValue: 0
     }
 }
 const opcoes = {
     freezeTableName: true,
-    tableName: 'Pagamentos',
-    version: 'versao'
+    tableName: 'Payments',
 }
 
 

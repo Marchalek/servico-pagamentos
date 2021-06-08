@@ -1,11 +1,13 @@
 const roteador = require('express').Router()
 const TabelaPagamentos = require('./tabelaPagamentos')
 const Pagamentos = require('./pagamentos')
+const Serializador = require ('../serializador')
 
 roteador.get('/', async (req, res) => {
     const resultados = await TabelaPagamentos.listar()
+    const serializador = new Serializador
     res.status(200).send(
-        JSON.stringify(resultados)
+        serializador.serializar(resultados)
     )
 })
 
@@ -39,8 +41,9 @@ roteador.put('/:idPagamento', async (req, res, proximo) =>{
         const dados = Object.assign({}, dadosRecebidos, {id:id})
         const pagamento = new Pagamentos(dados)
         await pagamento.atualizar()
+        res.send('Método atualizado')
         res.status(204)
-        res.end()
+        
     } catch (erro) {
         proximo(erro)
     }

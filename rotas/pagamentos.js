@@ -1,19 +1,18 @@
 const TabelaPagamentos = require('./tabelaPagamentos')
-const DadosNaoFornecidos = require('../erros/DadosNaoFornecidos')
 
 class Pagamentos {
-    constructor ({id, nome, desconto, multiplicador}) {
+    constructor ({id, name, discount, multiply}) {
         this.id = id
-        this.nome = nome
-        this.desconto = desconto
-        this.multiplicador = multiplicador + ((100-desconto)/100)
+        this.name = name
+        this.discount = discount
+        this.multiply = multiply + ((100-discount)/100)
     }
 
     async criar() {
         const resultado = await TabelaPagamentos.inserir({
-            nome: this.nome,
-            desconto: this.desconto,
-            multiplicador: this.multiplicador
+            name: this.name,
+            discount: this.discount,
+            multiply: this.multiply
         })
         this.id = resultado.id
     }
@@ -21,9 +20,9 @@ class Pagamentos {
     async carregar() {
         const encontrado = await TabelaPagamentos.pegarPorId(this.id)
         this.id = encontrado.id
-        this.nome = encontrado.nome
-        this.desconto = encontrado.desconto
-        this.multiplicador = encontrado.multiplicador
+        this.name = encontrado.name
+        this.discount = encontrado.discount
+        this.multiply = encontrado.multiply
     }
 
     remover() {
@@ -32,7 +31,7 @@ class Pagamentos {
 
     async atualizar(){
         await TabelaPagamentos.pegarPorId(this.id)
-        const campos = ['nome', 'desconto']
+        const campos = ['name', 'discount', 'multiply']
         const dadosParaAtualizar = {}
 
         campos.forEach((campo) => {
@@ -40,7 +39,7 @@ class Pagamentos {
             dadosParaAtualizar[campo] = valor
         })
 
-        if(Object.keys(dadosParaAtualizar).length === 0) {
+        if(Object.keys(dadosParaAtualizar).length === 1) {
             throw new DadosNaoFornecidos()
         }
 

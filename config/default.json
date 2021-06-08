@@ -1,6 +1,6 @@
 {
     "mysql": {
-        "banco-de-dados": "pagamentosdescontos",
+        "banco-de-dados": "paymentDiscount",
         "usuario": "root",
         "senha": "admin",
         "host": "127.0.0.1"
